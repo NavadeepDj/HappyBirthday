@@ -14,24 +14,25 @@
       overflow-x: hidden;
     }
     /* Cake Candles */
-    .candle {
-      width: 12px;
-      height: 45px;
-      background: #FFD700;
-      margin: 0 6px;
-      position: relative;
-      border-radius: 2px;
-    }
-    .flame {
-      width: 12px;
-      height: 18px;
-      background: orange;
-      border-radius: 50%;
-      position: absolute;
-      top: -18px;
-      left: 0;
-      animation: flicker 0.5s infinite;
-    }
+      .candle {
+        width: 8px;
+        height: 42px;
+        background: #FFD700;
+        margin: 2px;
+        position: relative;
+        border-radius: 2px;
+        flex: 0 0 auto;
+      }
+      .flame {
+        width: 8px;
+        height: 14px;
+        background: orange;
+        border-radius: 50%;
+        position: absolute;
+        top: -14px;
+        left: 0;
+        animation: flicker 0.45s infinite;
+      }
     @keyframes flicker {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.2); opacity: 0.7; }
@@ -60,6 +61,30 @@
     @keyframes float {
       0% { transform: translateY(0) scale(1); opacity: 1; }
       100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+    }
+    /* Wish overlay */
+    .wish-overlay {
+      position: fixed;
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%) scale(.9);
+      background: rgba(255,255,255,0.95);
+      padding: 18px 26px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      font-size: 1.15rem;
+      color: #b91c1c;
+      font-weight: 700;
+      display: inline-block;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 300ms ease, transform 400ms cubic-bezier(.2,.8,.2,1);
+      z-index: 9999;
+    }
+    .wish-overlay.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
     }
   </style>
 </head>
@@ -101,7 +126,7 @@
   <h2 class="text-2xl md:text-3xl font-semibold text-pink-700">📸 Our Memories 📸</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 max-w-md mx-auto">
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <img src="MomSmiley.jpg" alt="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomSmiley_vkfzgd.jpg" class="w-full h-56 sm:h-48 md:h-40 object-cover">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomSmiley_vkfzgd.jpg" alt="Mom Smiling" class="w-full h-56 sm:h-48 md:h-40 object-cover">
     </div>
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
       <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomDad_tewec3.jpg" alt="Mom and Dad" class="w-full h-56 sm:h-48 md:h-40 object-cover">
@@ -128,6 +153,9 @@
   <!-- Balloons -->
   <div id="balloon-container"></div>
 
+  <!-- Wish overlay (hidden by default) -->
+  <div id="wishOverlay" class="wish-overlay">Make a wish, Mom! 💫</div>
+
   <script>
     // Messages
     const messages = [
@@ -147,12 +175,41 @@
       document.getElementById("randomMessages").innerHTML = chosen.join("<br>");
     }
 
-    // Blow Candles + Confetti
-    function blowCandles() {
-      document.querySelectorAll(".flame").forEach(f => f.style.display = "none");
-      confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
-      alert("🎉 You blew out the candles! Make a wish, Mom 💫");
+    // Create 46 candles dynamically and make the cake wrap for small screens
+    function createCandles(count = 45) {
+      const cake = document.getElementById('cake');
+      cake.innerHTML = '';
+      cake.style.flexWrap = 'wrap';
+      cake.style.maxWidth = '360px';
+      cake.style.justifyContent = 'center';
+      for (let i = 0; i < count; i++) {
+        const c = document.createElement('div');
+        c.className = 'candle';
+        const f = document.createElement('div');
+        f.className = 'flame';
+        c.appendChild(f);
+        cake.appendChild(c);
+      }
     }
+
+    // Blow Candles + Confetti + animated overlay message
+    function blowCandles() {
+      document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+      confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
+
+      const overlay = document.getElementById('wishOverlay');
+      overlay.classList.add('show');
+
+      // small pop animation by toggling size
+      overlay.style.transform = 'translate(-50%, -50%) scale(1.06)';
+      setTimeout(() => overlay.style.transform = 'translate(-50%, -50%) scale(1)', 200);
+
+      // hide overlay after 3.2s
+      setTimeout(() => overlay.classList.remove('show'), 3200);
+    }
+
+    // Initialize
+    createCandles(46);
 
     // Floating Balloons
     function createBalloon() {
