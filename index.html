@@ -160,17 +160,17 @@
 <div class="mt-12 px-4">
   <h2 class="text-2xl md:text-3xl font-semibold text-pink-700">📸 Our Memories 📸</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 max-w-md mx-auto">
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomSmiley_vkfzgd.jpg" alt="Mom Smiling" class="w-full h-56 sm:h-48 md:h-40 object-contain">
+    <div class="rounded-2xl shadow-xl overflow-hidden">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomSmiley_vkfzgd.jpg" alt="Mom Smiling" class="w-full h-64 sm:h-56 md:h-48 object-cover" style="object-position: center;">
     </div>
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomDad_tewec3.jpg" alt="Mom and Dad" class="w-full h-56 sm:h-48 md:h-40 object-contain">
+    <div class="rounded-2xl shadow-xl overflow-hidden">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomDad_tewec3.jpg" alt="Mom and Dad" class="w-full h-64 sm:h-56 md:h-48 object-cover" style="object-position: top;">
     </div>
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomMe_zajgsw.jpg" alt="Me and Mom" class="w-full h-56 sm:h-48 md:h-40 object-contain">
+    <div class="rounded-2xl shadow-xl overflow-hidden">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomMe_zajgsw.jpg" alt="Me and Mom" class="w-full h-64 sm:h-56 md:h-48 object-cover" style="object-position: center;">
     </div>
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomTree_ts3tto.jpg" alt="Mom and Tree" class="w-full h-56 sm:h-48 md:h-40 object-contain">
+    <div class="rounded-2xl shadow-xl overflow-hidden">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758558368/MomKousic_vixkjb.jpg" alt="Mom and Kousic" class="w-full h-64 sm:h-56 md:h-48 object-cover" style="object-position: center;">
     </div>
   </div>
 </div>
@@ -214,7 +214,7 @@
     }
 
     // Create 46 candles dynamically and make the cake wrap for small screens
-    function createCandles(count = 45) {
+    function createCandles(count = 5) {
       const cake = document.getElementById('cake');
       cake.innerHTML = '';
       cake.style.flexWrap = 'wrap';
