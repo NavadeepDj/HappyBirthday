@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday, Mom! 💙</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .candle {
+      width: 10px;
+      height: 40px;
+      background: #FFD700;
+      margin: 0 5px;
+      position: relative;
+    }
+    .flame {
+      width: 10px;
+      height: 15px;
+      background: orange;
+      border-radius: 50%;
+      position: absolute;
+      top: -15px;
+      left: 0;
+      animation: flicker 0.5s infinite;
+    }
+    @keyframes flicker {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="text-center p-8">
+
+  <!-- Main Heading -->
+  <h1 class="text-5xl font-bold text-pink-700 mb-6">🎂 Happy Birthday, Mom! 💙</h1>
+  
+  <!-- Music -->
+  <audio autoplay loop>
+    <source src="your-favorite-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Cake with Candles -->
+  <div id="cake" class="flex justify-center mb-8">
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+  </div>
+  <button onclick="blowCandles()" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600">Blow the Candles 🎉</button>
+
+  <!-- Random Messages -->
+  <div class="mt-10">
+    <h2 class="text-3xl font-semibold text-purple-700">💌 Special Messages for You 💌</h2>
+    <p id="randomMessages" class="mt-4 text-xl text-gray-800"></p>
+    <button onclick="showMessages()" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600">Show Messages</button>
+  </div>
+
+  <!-- Photo Gallery -->
+  <div class="mt-12">
+    <h2 class="text-3xl font-semibold text-pink-700">📸 Our Memories 📸</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomSmiley_vkfzgd.jpg" class="rounded-2xl shadow-lg">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomDad_tewec3.jpg" class="rounded-2xl shadow-lg">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomMe_zajgsw.jpg" class="rounded-2xl shadow-lg">
+      <img src="https://res.cloudinary.com/dzycwygze/image/upload/v1758546301/MomMe_zajgsw.jpg" class="rounded-2xl shadow-lg">
+    </div>
+  </div>
+
+  <!-- Closing Note -->
+  <div class="mt-12 text-2xl text-gray-900 font-medium">
+    Thank you for everything, Mom. You are my biggest inspiration 💖
+  </div>
+
+  <script>
+    // Birthday Messages (from your Python idea, but in JS)
+    const messages = [
+      "Happy Birthday, Mom! 💙",
+      "You are my biggest inspiration 🌟",
+      "Thanks for always being there 🤗",
+      "You make the world brighter 🌸",
+      "Love you to infinity ♾️"
+    ];
+
+    function showMessages() {
+      let chosen = [];
+      for (let i = 0; i < 3; i++) {
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        chosen.push("👉 " + msg);
+      }
+      document.getElementById("randomMessages").innerHTML = chosen.join("<br>");
+    }
+
+    // Blow Candles
+    function blowCandles() {
+      document.querySelectorAll(".flame").forEach(f => f.style.display = "none");
+      alert("🎉 You blew out the candles! Make a wish, Mom 💫");
+    }
+  </script>
+</body>
+</html>
