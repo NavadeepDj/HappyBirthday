@@ -69,22 +69,57 @@
       top: 40%;
       transform: translate(-50%, -50%) scale(.9);
       background: rgba(255,255,255,0.95);
-      padding: 18px 26px;
-      border-radius: 14px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      font-size: 1.15rem;
-      color: #b91c1c;
-      font-weight: 700;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+      font-size: 1.3rem;
+      font-weight: 800;
       display: inline-block;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 300ms ease, transform 400ms cubic-bezier(.2,.8,.2,1);
+      transition: all 500ms cubic-bezier(.34,1.56,.64,1);
       z-index: 9999;
+      text-align: center;
+      min-width: 280px;
+      border: 3px solid transparent;
+      background-clip: padding-box;
     }
     .wish-overlay.show {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(1.1);
       pointer-events: auto;
+      animation: rainbow-glow 2s ease-in-out infinite alternate, pulse-glow 1.5s ease-in-out infinite;
+    }
+    @keyframes rainbow-glow {
+      0% { border-color: #ff6b6b; color: #ff6b6b; text-shadow: 0 0 20px #ff6b6b; }
+      16% { border-color: #ffa500; color: #ffa500; text-shadow: 0 0 20px #ffa500; }
+      33% { border-color: #ffeb3b; color: #ffeb3b; text-shadow: 0 0 20px #ffeb3b; }
+      50% { border-color: #4caf50; color: #4caf50; text-shadow: 0 0 20px #4caf50; }
+      66% { border-color: #2196f3; color: #2196f3; text-shadow: 0 0 20px #2196f3; }
+      83% { border-color: #9c27b0; color: #9c27b0; text-shadow: 0 0 20px #9c27b0; }
+      100% { border-color: #e91e63; color: #e91e63; text-shadow: 0 0 20px #e91e63; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { transform: translate(-50%, -50%) scale(1.1); }
+      50% { transform: translate(-50%, -50%) scale(1.15); }
+    }
+    .floating-heart {
+      position: absolute;
+      color: #ff1744;
+      font-size: 20px;
+      animation: float-up 3s ease-out forwards;
+      pointer-events: none;
+      z-index: 10000;
+    }
+    @keyframes float-up {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) rotate(360deg) scale(0.3);
+      }
     }
   </style>
 </head>
@@ -160,10 +195,13 @@
     // Messages
     const messages = [
       "Happy Birthday, Mom! 💙",
-      "You are my biggest inspiration 🌟",
+      "Haha, nanna whatsapp chusi cheppadu 🌟",
       "Thanks for always being there 🤗",
-      "You make the world brighter 🌸",
-      "Love you to infinity ♾️"
+      "nana and nuvvu enjoy cheyyandi 🌸",
+      "Eat your ice creams; have fun;🍦",
+      "Go to temple and enjoy",
+      "When I come back, I will let you enjoy what you love and like",
+      "Enjoyyyyy Mommmmmmiiiiesss 🎉"
     ];
 
     function showMessages() {
@@ -199,17 +237,57 @@
 
       const overlay = document.getElementById('wishOverlay');
       overlay.classList.add('show');
+      overlay.textContent = ''; // Clear text for typing effect
 
-      // small pop animation by toggling size
-      overlay.style.transform = 'translate(-50%, -50%) scale(1.06)';
-      setTimeout(() => overlay.style.transform = 'translate(-50%, -50%) scale(1)', 200);
+      // Typing effect
+      const message = "Make a wish, Mom! 💫";
+      let charIndex = 0;
 
-      // hide overlay after 3.2s
-      setTimeout(() => overlay.classList.remove('show'), 3200);
+      function typeChar() {
+        if (charIndex < message.length) {
+          overlay.textContent += message[charIndex];
+          charIndex++;
+          setTimeout(typeChar, 150); // Typing speed
+        } else {
+          // Start creating floating hearts after typing completes
+          createFloatingHearts();
+        }
+      }
+
+      // Start typing after a brief delay
+      setTimeout(typeChar, 300);
+
+      // hide overlay after 4.5s
+      setTimeout(() => overlay.classList.remove('show'), 4500);
+    }
+
+    // Create floating hearts around the wish message
+    function createFloatingHearts() {
+      const hearts = ['💖', '💕', '💗', '💓', '💝', '💘'];
+
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'floating-heart';
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+          // Position hearts around the overlay
+          const overlay = document.getElementById('wishOverlay');
+          const overlayRect = overlay.getBoundingClientRect();
+
+          heart.style.left = (overlayRect.left + Math.random() * overlayRect.width) + 'px';
+          heart.style.top = (overlayRect.top + Math.random() * overlayRect.height) + 'px';
+
+          document.body.appendChild(heart);
+
+          // Remove heart after animation
+          setTimeout(() => heart.remove(), 3000);
+        }, i * 200); // Stagger heart creation
+      }
     }
 
     // Initialize
-    createCandles(46);
+    createCandles(6);
 
     // Floating Balloons
     function createBalloon() {
